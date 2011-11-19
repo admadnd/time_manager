@@ -1,5 +1,5 @@
 from django import forms
-from midtermproj.models import Task,Category
+from time_manager.models import Task,Category
 from django.db.models import Q
 import datetime
 from django.core.exceptions import ValidationError
@@ -26,11 +26,13 @@ class TaskForm(forms.ModelForm):
         print end 
         print start
 
+        
         list = Task.objects.filter(
-            Q(start__lte=start,end__gte=end) |  # O subset of N
-            Q(start__gte=start,end__lte=end) |  # N subset of O
-            Q(end__gt=start,end__lt=end)     |  # O intersect N from left
-            Q(start__gt=start,start__lt=end)    # O intersect N from right
+            Q(start__lt=start,end__gt=end) |  # superset
+            Q(start=start,end=end) | #equal 
+            Q(start__gt=start,end__lt=end) | # subset
+            Q(start__lt=start,end__gt=start,end__lte=end) | # left overlap
+            Q(start__gte=start,start__lt=end,end__gt=end)  # right overlap
             )
         if list:
             print "Fail"

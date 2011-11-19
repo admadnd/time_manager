@@ -1,0 +1,36 @@
+#nav li {
+    display:inline;
+}
+
+#nav ul {
+    border-style:solid;
+    border-width:thin;
+}
+
+ul {
+    list-style:none;
+    padding:0;
+   
+}
+
+.task {
+    border-style:solid;
+    border-width:thin;
+    margin:0;
+   
+}
+
+.task ul {
+    padding:0;
+    margin:0;
+   
+}
+
+.task ul li {
+    display:inline;
+    /*border-left: 2px solid;*/
+}
+
+.stats ul li {
+    display:inline;
+}

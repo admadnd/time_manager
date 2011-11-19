@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Task List
+{% endblock title %}
+
+{% block maincontent %}
+{% include 'navigation.html' %}
+{% if task_list %}
+<ul> 
+  {% for task in task_list %}
+  <li>
+    <div class="task">
+      <ul>
+	<li>{{ task.start }}</li>
+	<li>{{ task.end }}</li>
+	<li>{{ task.name }}</li>
+	<li>
+	  {% for label in task.categories.all %}
+	  {{ label.name }},
+	  {% endfor %}
+	</li>
+      </ul>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+<ul>
+  {% for label,avg in day_avgs %}
+  <li>
+    <div class="stats">
+      <ul>
+	<li>{{ label }}</li>
+	<li>{{ avg }}</li>
+      </ul>
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+(Nothing)
+{% endif %} 
+
+{% endblock maincontent %}

@@ -5,8 +5,8 @@ from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.views.generic.edit import ModelFormMixin
 from django.views.generic import FormView,ListView
-from midtermproj.forms import TaskForm,CategoryForm
-from midtermproj.models import Task,Category
+from time_manager.forms import TaskForm,CategoryForm
+from time_manager.models import Task,Category
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect 
@@ -17,7 +17,7 @@ class UserCreationView(FormView):
     template_name = 'register.html'
     success_url = '/login/'
 
-@login_required(login_url='/midtermproj/login/')
+@login_required(login_url='/login/')
 def task_creation_view(request):
     # create dummy Task object to handle displaying on subset of ModelForm
     # fields issue
@@ -28,27 +28,27 @@ def task_creation_view(request):
     
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/midtermproj/view/')
+        return HttpResponseRedirect('/view/')
     else:
         form = TaskForm(instance=task)
     
     return render_to_response('add_form.html', { 'form': form, }, context_instance=RequestContext(request))
 
 
-@login_required(login_url='/midtermproj/login/')
+@login_required(login_url='/login/')
 def category_creation_view(request):
     form = CategoryForm(request.POST)
 
     if form.is_valid():
         form.save()
-        return HttpResponseRedirect('/midtermproj/view/')
+        return HttpResponseRedirect('/view/')
     else:
         form = CategoryForm()
 
     # Request Context needed for csrf token to be given to the web page
     return render_to_response('add_form.html', { 'form': form, }, context_instance=RequestContext(request))
 
-@login_required(login_url='/midtermproj/login/')
+@login_required(login_url='/login/')
 def  task_list_view(request):
     task_list = Task.objects.filter(user=request.user)
     
@@ -76,7 +76,7 @@ class CategoryCreationView(ModelFormMixin):
     form_class = CategoryForm
     model = Category
     template_name = 'add_form.html'
-    success_url = '/midtermproj/view/'
+    success_url = '/view/'
 
 class TaskCreationView(ModelFormMixin):
     model=Task
