@@ -5,8 +5,10 @@
 
   <head>
     <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/base.css" />
+    {% block head %}
     {% block title %}
     {% endblock title %}
+    {% endblock head %}
   </head>
   
   <body>

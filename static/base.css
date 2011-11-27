@@ -34,3 +34,12 @@ ul {
 .stats ul li {
     display:inline;
 }
+
+#weekpiedat {
+    display:block;
+}
+
+#weekpiechart {
+    width:600px;
+    height:300px;
+}

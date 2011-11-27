@@ -10,6 +10,43 @@ from time_manager.models import Task,Category
 import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect 
+from django.views.generic import TemplateView
+from django.db.models import Q
+
+class FlotView(TemplateView):
+    template_name = "test.html"
+
+@login_required(login_url='/login/')
+def stats_view(request):
+    categories = Category.objects.all()
+
+    data = dict()
+    for category in categories:
+        
+        # look at tasks for a given category in the last 7 days
+        end_date = datetime.datetime.now()
+        start_date = end_date - datetime.timedelta(days=7)
+        print start_date
+        print end_date
+        query = Q(user=request.user,
+                  start__gte=start_date,
+                  start__lt=end_date,
+                  end__gt=start_date,
+                  end__lte=end_date,
+                 )
+                  
+        total_time_dt = datetime.timedelta()
+        for task in category.task_set.filter(query):
+            # calculate the amount of time spent for every time under a category
+            total_time_dt = total_time_dt + (task.end-task.start)
+            print total_time_dt
+
+        # Only add category if there are tasks w non-zero time associated 
+        # with it
+        if total_time_dt != datetime.timedelta():
+            data[category.name] = total_time_dt.total_seconds()    
+        
+    return render_to_response('stats.html',{'data':data}, context_instance=RequestContext(request))
 
 # Handles creation of users
 class UserCreationView(FormView):
