@@ -9,6 +9,7 @@ urlpatterns = patterns(
     (r'^view/$', 'task_list_view'),
     (r'^stats/$', StatsView.as_view()),
     (r'^pie/$', 'pie_gen_view'),
+    (r'^sorted/$', 'sorted_view'),
 )
 
 urlpatterns += patterns(

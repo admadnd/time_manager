@@ -18,6 +18,14 @@ class StatsView(TemplateView):
     template_name = "stats.html"
 
 @login_required(login_url='/login/')
+# create a view to generate html snippet within view
+def sorted_view(request):
+    #obtain a queryset of task objects filtered by user and ordered by name
+    QO = Task.objects.filter(user = request.user).order_by('name')
+    #put QuerySet in contect for template that will generate html snippit and return HTTP response
+    return render_to_response('table_creation.html', { 'task_list': QO, }, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
 def pie_gen_view(request):
     categories = Category.objects.all()
 
