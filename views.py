@@ -9,18 +9,19 @@ from time_manager.forms import TaskForm,CategoryForm
 from time_manager.models import Task,Category
 import datetime
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect 
+from django.http import HttpResponseRedirect,HttpResponse
 from django.views.generic import TemplateView
 from django.db.models import Q
+from json import JSONEncoder
 
-class FlotView(TemplateView):
-    template_name = "test.html"
+class StatsView(TemplateView):
+    template_name = "stats.html"
 
 @login_required(login_url='/login/')
-def stats_view(request):
+def pie_gen_view(request):
     categories = Category.objects.all()
 
-    data = dict()
+    data = []
     for category in categories:
         
         # look at tasks for a given category in the last 7 days
@@ -44,9 +45,12 @@ def stats_view(request):
         # Only add category if there are tasks w non-zero time associated 
         # with it
         if total_time_dt != datetime.timedelta():
-            data[category.name] = total_time_dt.total_seconds()    
-        
-    return render_to_response('stats.html',{'data':data}, context_instance=RequestContext(request))
+            data.append(dict([("label",category.name),("data",total_time_dt.total_seconds()/3600)]))
+
+    # create JSON object from python 
+    dat = JSONEncoder().encode(data)
+
+    return HttpResponse(dat,'application/json')
 
 # Handles creation of users
 class UserCreationView(FormView):

@@ -1,16 +1,12 @@
 $(document).ready(function() {
 
-    var data = [];
-    $('#weekpiedat ul li > ul').each(function() {
-	var category = $(this).children().filter(':first-child').text();
-	var time = parseFloat($(this).children().filter(':last-child').text());
-	/* flot cannot handle the time in seconds. Numbers too large. */
-	time = time / 3600;
+    // For debugging
+    $.ajaxSetup({"error":function(XMLHttpRequest,textStatus, errorThrown) {
+	alert(textStatus);
+	alert(errorThrown);
+	alert(XMLHttpRequest.responseText);
+    }});
 
-	elem = { label: category, data: time};
-	data.push(elem);
-    });
-        
     var options = {
 	series:{
 	    pie:{
@@ -22,6 +18,18 @@ $(document).ready(function() {
 	}
     };
 
-    $('#weekpiedat').hide();
-    $.plot($("#weekpiechart"),data,options);
+    $('#pie a').click(function() {
+ 
+	$.getJSON("/pie/", function(data) {
+	    console.log(data);
+	    //PLOT.setData(data);
+	    //PLOT.setData(test);
+	    //PLOT.draw();
+	    $.plot($("#weekpiechart"),data,options);
+	});
+
+	return false;
+    });
+    
+    
 });

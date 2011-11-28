@@ -1,15 +1,14 @@
 from django.conf.urls.defaults import *
 from time_manager.views import UserCreationView,TaskCreationView,CategoryCreationView
-from time_manager.views import FlotView
+from time_manager.views import StatsView
 urlpatterns = patterns(
     'time_manager.views',
     (r'^register/$', UserCreationView.as_view()),
     (r'^add_task/$', 'task_creation_view'),
     (r'^add_category/$', 'category_creation_view'),
     (r'^view/$', 'task_list_view'),
-    (r'^flot/$', FlotView.as_view()),
-    (r'^stats/$', 'stats_view'),
-    
+    (r'^stats/$', StatsView.as_view()),
+    (r'^pie/$', 'pie_gen_view'),
 )
 
 urlpatterns += patterns(

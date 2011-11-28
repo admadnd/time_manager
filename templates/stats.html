@@ -19,20 +19,13 @@ n
 {% block maincontent %}
     {% include 'navigation.html' %}
     
-    <div id="weekpiedat">
-      <ul>
-	{% for label,value in data.items %}
-	<li>
-	  <ul>
-	    <li>{{label}}</li>
-	    <li>{{value}}</li>
-	  </ul>
-	</li>
-	{% endfor %}
-      </ul>
+    <div id="pie">
+      <a href="#">Pie chart</a>
     </div>
-    
+
     <div id="weekpiechart"></div>
+
+    
 
 {% endblock maincontent %}    
 
