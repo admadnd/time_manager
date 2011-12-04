@@ -22,11 +22,6 @@ Task List
 </div>
 <div id= "sorted"></div>
 
-<div id= "task_start_time">
-    <a href="#">Sort by Task Start Time</a>
-</div>
-<div id= "sorted2"></div>
-
 {% if day_avgs %}
 <ul>
   {% for label,avg in day_avgs %}
