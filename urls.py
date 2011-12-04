@@ -11,6 +11,8 @@ urlpatterns = patterns(
     (r'^pie/$', 'pie_gen_view'),
     (r'^sorted/$', 'sorted_view'),
     (r'^sorted2/$', 'sorted2_view'),
+    (r'^sorted3/$', 'sorted3_view'),
+    (r'^sorted4/$', 'sorted4_view'),
 )
 
 urlpatterns += patterns(

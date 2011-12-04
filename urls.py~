@@ -10,6 +10,7 @@ urlpatterns = patterns(
     (r'^stats/$', StatsView.as_view()),
     (r'^pie/$', 'pie_gen_view'),
     (r'^sorted/$', 'sorted_view'),
+    (r'^sorted2/$', 'sorted2_view'),
 )
 
 urlpatterns += patterns(
