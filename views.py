@@ -11,7 +11,7 @@ import datetime
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect,HttpResponse
 from django.views.generic import TemplateView
-from django.db.models import Q
+from django.db.models import Q,Sum
 from json import JSONEncoder
 
 class StatsView(TemplateView):
@@ -48,6 +48,37 @@ def sorted4_view(request):
     QO4 = Task.objects.filter(user = request.user).order_by('-start')
     #put QuerySet in contect for template that will generate html snippit and return HTTP response
     return render_to_response('table_creation.html', { 'task_list': QO4, }, context_instance=RequestContext(request))
+
+@login_required(login_url='/login/')
+def lgraph_gen_view(request):
+    
+    categories = Category.objects.all()
+
+    series = list() 
+
+    for category in categories:
+        # iterating through all twelve months (exclusive)
+        
+        # initializing options for data series
+        data = dict();
+        data['lines'] = dict([('show',True)])
+        data['data'] = list()
+        data['label'] = category.name
+        for i in range(1,13):
+            sum = datetime.timedelta() 
+            # summing all the time deltas
+            for task in category.task_set.filter(start__month=i):
+                sum = sum + (task.end - task.start)
+            # add month,total # of hours 
+            data['data'].append(list((i,sum.total_seconds()/3600)))
+
+        # add series object to list of series
+        series.append(data);            
+
+    
+    dat = JSONEncoder().encode(series)
+
+    return HttpResponse(dat,'application/json')
 
 @login_required(login_url='/login/')
 def pie_gen_view(request):

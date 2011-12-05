@@ -20,16 +20,27 @@ $(document).ready(function() {
 
     $('#pie a').click(function() {
  
-	$.getJSON("/pie/", function(data) {
-	    console.log(data);
-	    //PLOT.setData(data);
-	    //PLOT.setData(test);
-	    //PLOT.draw();
-	    $.plot($("#weekpiechart"),data,options);
-	});
+	    $.getJSON("/pie/", function(data) {
+	        console.log(data);
+	        //PLOT.setData(data);
+	        //PLOT.setData(test);
+	        //PLOT.draw();
+	        $.plot($("#weekpiechart"),data,options);
+	    })
 
-	return false;
+        return false;
     });
-    
-    
+
+    $('#weeklyline a').click(function() {
+        
+        $.getJSON("/weeklyline/", function(data) {
+
+            $.plot($("#weeklylinegraph"),data,[]);
+        });
+
+        return false;
+
+    });    
+
+        
 });
