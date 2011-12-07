@@ -7,24 +7,23 @@ $(document).ready(function() {
 	alert(XMLHttpRequest.responseText);
     }});
 
-    var options = {
-	series:{
-	    pie:{
-		show: true
-	    }
-	},
-	legend:{
-	    show: false
-	}
-    };
-
-    $('#pie a').click(function() {
+        $('#pie a').click(function() {
  
 	    $.getJSON("/pie/", function(data) {
 	        console.log(data);
-	        //PLOT.setData(data);
-	        //PLOT.setData(test);
-	        //PLOT.draw();
+
+	        var options = {
+	            series:{
+                     pie:{
+                        show: true
+	                 }
+	            },
+	            legend:{
+	                show: false
+	            }
+            };
+
+
 	        $.plot($("#weekpiechart"),data,options);
 	    })
 
@@ -41,6 +40,35 @@ $(document).ready(function() {
         return false;
 
     });    
+
+    $('#timeline a').click(function() {
+        
+        $.getJSON("/timeline/", function(data) {
+
+            var options = {
+                series:{
+                    lines:{
+                        show: true,   
+                        fill: true
+                    }
+                },
+                xaxis:{
+                    show:true,
+                    mode:"time",
+                    timeformat:"%y/%m/%d %h:%S%P"
+                },
+                yaxis:{
+                    show:false
+                }
+            };
+
+            $.plot($("#timelinegraph"),data,options);
+        });
+
+        return false;
+
+    });    
+
 
         
 });

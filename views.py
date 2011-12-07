@@ -13,6 +13,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.views.generic import TemplateView
 from django.db.models import Q,Sum
 from json import JSONEncoder
+from time import mktime
 
 class StatsView(TemplateView):
     template_name = "stats.html"
@@ -78,6 +79,59 @@ def lgraph_gen_view(request):
     
     dat = JSONEncoder().encode(series)
 
+    return HttpResponse(dat,'application/json')
+
+@login_required(login_url='/login/')
+def timeline_view(request):
+    categories = Category.objects.all()
+
+    # initializing dataset for flot
+    data = [] 
+    # arbitrary height for y-coordinates
+    height = 2
+
+    # get yesterday's date
+    date = datetime.date.today() - datetime.timedelta(days=1)
+     
+    # iterate through categories
+    for category in categories:
+        # iterate through tasks for the particular category for yesterday
+        
+        # temporary array to store points where
+        # x coord is javascript timestamp and y coord is an arbitrary height
+        # that will be the same for every point
+        temp = [] 
+        for task in category.task_set.filter(start__day=date.day,start__year=date.year,start__month=date.month):
+            # create javascript timestamps for start and end time
+            # multiply by 1000 because js timestamp is in milliseconds rather than seconds 
+            # like the standard unix timestamp
+
+            
+            p0 = int(mktime(task.start.timetuple())*1000)
+            #p1 = int(mktime( task.end.timetuple() )*1000) 
+            if task.end.date() == date:
+                p1 = int(mktime( task.end.timetuple() )*1000)
+            else:
+                # task goes into next day, limit it to 12:00am of today
+                mp1 = task.end - datetime.timedelta(days=1)
+                mp1 = mp1.replace(hour=0,minute=0,microsecond=0)
+                p1 = int(mktime( mp1.timetuple() )*1000)
+
+            temp.append([p0,height]) 
+            temp.append([p1,height])
+            # to create line segments in flot
+            temp.append(None)                
+
+        # used to create series object
+        tempdic = dict()
+
+        # add series object to dataset
+        tempdic['data'] = temp
+        tempdic['label'] = category.name
+        data.append(tempdic)
+        
+        
+    dat = JSONEncoder().encode(data)
     return HttpResponse(dat,'application/json')
 
 @login_required(login_url='/login/')
