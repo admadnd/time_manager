@@ -1,38 +1,60 @@
-#nav li {
+body{
+    background-image:url(http://cdn.tripwiremagazine.com/wp-content/uploads/2010/08/OldpaperPsd1.jpg);
+      
+}
+
+#nav li { 
     display:inline;
+    list-style-type:circle;
+     
 }
 
 #nav ul {
-    border-style:solid;
-    border-width:thin;
+    /*border-style:solid;
+    border-width:thin;*/
 }
 
 ul {
-    list-style:none;
+    
     padding:0;
-   
+    font-style:bold;
+    font-size:25px;
 }
 
 .task {
     border-style:solid;
     border-width:thin;
     margin:0;
-   
+    position:absolute;
+    top:150px;
+    right:300px;
 }
 
 .task ul {
-    padding:0;
-    margin:0;
-   
+    /*padding:0;
+    margin:0;*/
+    position:absolute;
+    top:250px;
+    right:300px;
 }
 
-.task ul li {
-    display:inline;
-    /*border-left: 2px solid;*/
+table, td, th
+{
+border:1px solid green;
+}
+td
+{
+background-color:#D2B48C;
+color:black;
+}
+
+table{
+   
 }
 
 .stats ul li {
     display:inline;
+    
 }
 
 #weekpiedat {
@@ -47,11 +69,17 @@ ul {
 #weeklylinegraph {
     width:600px;
     height:300px;
+    font-style:bold;
+    font-size:25px;
+    color:black;
 }
 
 #timelinegraph {
     width:600px;
     height:300px;
+    font-style:bold;
+    font-size:25px;
+    color:black;
 }
 
 /* css for timepicker */

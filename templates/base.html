@@ -4,12 +4,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 
   <head>
-    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/base.css" />
+    <link rel="stylesheet" type="text/css" href="{{STATIC_URL}}/base.css" />    
     {% block head %}
+    <title>
     {% block title %}
     {% endblock title %}
+    </title>
     {% endblock head %}
   </head>
+
   
   <body>
     {% block maincontent %}
