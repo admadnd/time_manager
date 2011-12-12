@@ -4,6 +4,15 @@
     Add Content
 {% endblock title %}
 
+{% block head %}
+{{block.super}}
+    <link type="text/css" href="{{STATIC_URL}}/css/smoothness/jquery-ui-1.8.16.custom.css" rel="stylesheet" />  
+    <script type="text/javascript" src="{{STATIC_URL}}/js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/js/jquery-ui-1.8.16.custom.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/jquery-ui-timepicker-addon.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}/add_form.js"></script>
+{% endblock head %}
+
 {% block maincontent %}
 {% include 'navigation.html' %}
     {% if form.errors %}
