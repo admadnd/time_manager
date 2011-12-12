@@ -3,6 +3,18 @@ body{
       
 }
 
+p{
+    font-style:bold;
+    font-size:20px;
+    color:black;
+}
+
+h1{
+    font-style:bold;
+    font-size:25px;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
+}
 #nav li { 
     display:inline;
     list-style-type:circle;
@@ -18,7 +30,7 @@ ul {
     
     padding:0;
     font-style:bold;
-    font-size:25px;
+    font-size:21px;
 }
 
 .task {
