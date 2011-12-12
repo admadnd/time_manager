@@ -9,11 +9,12 @@ class TaskForm(forms.ModelForm):
         model = Task
         # adjust format of start and end time to remove seconds in show
         # in 12-hour time
+        '''
         widgets = { 
             'start': forms.DateTimeInput(format= '%m/%d/%Y %I:%M %p'),
             'end': forms.DateTimeInput(format= '%m/%d/%Y %I:%M %p'),
         } 
-            
+        '''  
 
     def clean(self):
         # call original clean function to get cleaned_data
