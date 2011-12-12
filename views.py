@@ -115,7 +115,7 @@ def timeline_view(request):
                 # task goes into next day, limit it to 12:00am of today
                 mp1 = task.end - datetime.timedelta(days=1)
                 mp1 = mp1.replace(hour=0,minute=0,microsecond=0)
-                p1 = int(mktime( mp1.timetuple() )*1000)
+                p1 = int(mktime( mp1.timetuple() )*1000 + 18000000.0)
 
             temp.append([p0,height]) 
             temp.append([p1,height])

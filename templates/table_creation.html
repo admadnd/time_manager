@@ -1,18 +1,14 @@
-<ul> 
+<table> 
   {% for task in task_list %}
-  <li>
-    <div class="task">
-      <ul>
-	<li>{{ task.start }}</li>
-	<li>{{ task.end }}</li>
-	<li>{{ task.name }}</li>
-	<li>
+  <tr>
+	<td>{{ task.start }}</td>
+	<td>{{ task.end }}</td>
+	<td>{{ task.name }}</td>
+	<td>
 	  {% for label in task.categories.all %}
 	  {{ label.name }},
 	  {% endfor %}
-	</li>
-      </ul>
-    </div>
-  </li>
+	</td>
+  </tr>
   {% endfor %}
-</ul>
+</table>
